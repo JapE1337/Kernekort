@@ -10,3 +10,13 @@
 - Visuel browserkontrol og interaktiv zoom/navigation er ikke verificeret: preview-forbindelsen var utilgængelig i sessionen. Se manuel kontrolliste i README.
 
 Eksempel: Mg-24 har atommasse 23,985041689 u og evalueret samlet bindingsenergi 198,2570472 MeV. Evalueret bindingsenergi pr. nukleon er 8,2607103 MeV/nukleon. Værdierne vises separat.
+
+## Opdatering 21. oktober 2026: navigation i bindingsenergikurven
+
+Zoom med musehjul, knapper, tastatur og pinch samt panorering er aktiveret i kurven. Akser og punktvalg anvender samme koordinattransformation; nulstilling og fokus er aktiveret. Kurvens visning holdes separat fra kernekortet.
+
+22 data- og navigationstests består, herunder tre nye tests af zoom omkring markøren, panorering, fokus, nulstilling og zoomgrænser. Syntakskontrol består. HTTP-testen kunne ikke gentages i denne session, fordi localhost-forbindelsen blev afvist med EACCES. Visuel browserkontrol er ikke udført i denne opdatering.
+
+## Rettelse: søgning i den selvstændige HTML-version
+
+Standalone-byggeren bevarer nu søgefunktionens alias (searchNuclides). En regressionstest eksekverer den leverede HTML-fils faktiske script med en minimal DOM og kontrollerer initialisering, navn, symbol, hævet nuklidnotation, Z, Enter-valg samt A/Z-søgning i kurvevisningen. Testen består. Dette er en automatiseret funktionstest, ikke en visuel browserkontrol.

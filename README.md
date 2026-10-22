@@ -27,7 +27,7 @@ Du skal bruge HTTP-serveren; dobbeltklik på `dist/index.html` virker ikke, ford
 - Mørkt/lyst tema, valg af decimaler eller betydende cifre og responsivt informationspanel.
 - Kopiering af værdier og læsbare formler med enheder og kilde til fx Word. Browserens udklipsholder kræver localhost eller HTTPS; en fallback er inkluderet.
 - Sammenligning: fasthold en nuklid med “Sammenlign +”, vælg derefter en anden.
-- Bindingsenergikurve viser evalueret MeV/nukleon mod A. Punkter kan vælges.
+- Bindingsenergikurve viser evalueret MeV/nukleon mod A. Punkter kan vælges. Brug musehjul, +/− eller pinch til zoom, træk for panorering, ↺ til nulstilling og ⌖ til at centrere den valgte nuklid. Akser og punktvalg følger zoom og panorering. Kort og kurve har hver sin visning.
 
 ## Datakilder og afgrænsning
 
@@ -95,6 +95,8 @@ Ved leveringen bestod datatests og syntakskontrol. Interaktiv og visuel browser-
 npm run build
 ```
 
+Build genskaber også den selvstændige `Kernekort.html`, der kan åbnes direkte uden en server.
+
 Upload **indholdet af `dist/`** til et statisk webhotel, Netlify, Cloudflare Pages, GitHub Pages eller lignende. Build kopierer originaltabellerne til `dist/data/raw/`, så kildelinks virker på hosting. Der kræves ingen backend, databasekonto, build-afhængigheder eller API-nøgler. Brug HTTPS til udklipsholderen. Alle asset- og datastier er relative og virker i en undermappe.
 
 Websitet er leveret lokalt og **ikke offentliggjort**. Der er ikke oprettet en hostingkonto eller en ekstern Site.
@@ -115,3 +117,10 @@ tests/              Fysik-, data-, søge- og HTTP-tests
 
 Der er valgt en afhængighedsfri ES-modul/Canvas-løsning frem for Next.js og Tailwind, som var forslag i briefen. Det gør den lokale kørsel og senere statisk hosting enkel og holder kortet hurtigt med tusindvis af celler.
 
+
+
+## GitHub Pages
+
+`npm run build` opdaterer både `dist/`, `Kernekort.html` og `docs/`. Mappen `docs/` indeholder den komplette hjemmeside samt `.nojekyll`, så GitHub serverer filerne direkte.
+
+Commit og push ændringerne til GitHub. Vælg derefter **Settings → Pages → Deploy from a branch**, vælg din branch (typisk `main`) og mappen **/docs**, og klik **Save**. GitHub viser hjemmesidens adresse på samme side. Ved senere ændringer: kør build, commit og push.

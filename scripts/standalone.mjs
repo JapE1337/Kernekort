@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const read=file=>fs.readFileSync(path.join(root,file),'utf8').replace(/^\uFEFF/,'');
+let html=read('dist/index.html');
+const physics=read('dist/physics.mjs').replace(/^export /gm,'');
+let app=read('dist/app.mjs').replace(/^import .*?;\r?\n/,'');
+const fetchBlock="const response=await fetch('data/nuclides.json');if(!response.ok)throw new Error('Databasen kunne ikke hentes');const data=await response.json();";
+if(!app.includes(fetchBlock))throw new Error('Standalone builder: database loader changed; update bundling.');
+app=app.replace(fetchBlock,'const data='+read('dist/data/nuclides.json')+';');
+for(const name of ['mass_1.mas20.txt','nubase_4.mas20.txt'])app=app.replaceAll(`href="data/raw/${name}"`,`href="https://www-nds.iaea.org/amdc/ame2020/${name}"`);
+html=html.replace('<link rel="stylesheet" href="styles.css">',()=>'<style>'+read('dist/styles.css')+'</style>');
+const script='(async()=>{\n'+physics+'\nconst searchNuclides=search;\n'+app+'\n})();';
+html=html.replace('<script type="module" src="app.mjs"></script>',()=>'<script>\n'+script.replace(/<\/script/gi,'<\\/script')+'\n</script>');
+fs.writeFileSync(path.join(root,'Kernekort.html'),html);
+console.log('Standalone Kernekort.html updated.');
